@@ -16,6 +16,77 @@
             --watermark-size: 100%;
         }
         body {
+            
+        <script>
+        // كود حماية التطبيق (يجب إضافته في كل تطبيق)
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const sessionId = urlParams.get('session_id');
+            const accessToken = urlParams.get('access_token');
+            
+            // التحقق من وجود بيانات الوصول
+            if (!sessionId || !accessToken) {
+                showAccessError();
+                return;
+            }
+            
+            // التحقق من مطابقة بيانات الجلسة
+            const storedSessionId = localStorage.getItem('teacher_portal_session_id');
+            const storedAccessToken = localStorage.getItem('teacher_portal_access_token');
+            
+            if (sessionId !== storedSessionId || accessToken !== storedAccessToken) {
+                showAccessError();
+                return;
+            }
+            
+            // إذا نجحت عملية التحقق، يمكن للمستخدم استخدام التطبيق
+            // (هنا يمكنك إضافة كود التطبيق العادي)
+            console.log('تم التحقق من الوصول بنجاح');
+            
+            // إخفاء رسالة التحميل وإظهار التطبيق
+            document.getElementById('loading-message').style.display = 'none';
+            document.getElementById('app-content').style.display = 'block';
+        });
+        
+        function showAccessError() {
+            document.body.innerHTML = `
+                <div style="
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    height: 100vh;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    text-align: center;
+                    padding: 20px;
+                ">
+                    <h1 style="font-size: 2.5rem; margin-bottom: 20px;">
+                        <i class="fas fa-exclamation-triangle"></i> خطأ في الوصول
+                    </h1>
+                    <p style="font-size: 1.2rem; max-width: 600px; margin-bottom: 30px;">
+                        لا يمكنك الوصول إلى هذا التطبيق مباشرة. يرجى الدخول من خلال 
+                        <a href="https://your-portal-domain.com" style="color: #feca57; text-decoration: underline;">
+                            حقيبة المعلم التربوية
+                        </a>
+                    </p>
+                    <a href="https://your-portal-domain.com" style="
+                        background: white;
+                        color: #4e54c8;
+                        padding: 15px 30px;
+                        border-radius: 50px;
+                        font-weight: bold;
+                        text-decoration: none;
+                        font-size: 1.1rem;
+                        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+                    ">
+                        العودة إلى حقيبة المعلم
+                    </a>
+                </div>
+            `;
+        }
+        </script>
+        
             font-family: 'Tajawal', sans-serif;
             background-color: #f0f2f5;
             font-weight: 500;
